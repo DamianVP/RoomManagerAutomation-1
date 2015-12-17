@@ -127,7 +127,7 @@ public class ConferenceRoomsPage extends BaseMainPageObject {
                     WebElement op = option.findElement(By.xpath("//div[@ng-repeat='resource in resources']/span[span[contains(text(),'"+option.getText()+"')]]"));
                     op.click();
                 }
-            }   catch (Exception e){
+            }   catch (Exception ignored){
             }
         }
     }
