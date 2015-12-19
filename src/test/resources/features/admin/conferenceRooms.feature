@@ -1,9 +1,8 @@
 @Rooms
-Feature: Rooms
-#
-#    Background:
-##      Given I login as "DamianVP" with password "Client123"
-##      And I navigate to Conference Rooms page
+Feature: ConferenceRooms
+
+    Background:
+      Given I sign in to Main page with user name "BrayanRosas" and password "Client123"
 
   @AssignResource
   Scenario Outline: User should be able Assign to Resources to Conference Room
@@ -29,7 +28,7 @@ Feature: Rooms
 
   Examples:
     |Room Name     |From Date|To Date|From Hrs|To Hrs|Reason                   |Description           |Message                   |
-    |Floor1Room14  |5        |8      |10      |11     |Closed for reparations   |this is a description |Room successfully Modified|
+    |Floor1Room1  |5        |8      |10      |11     |Closed for reparations   |this is a description |Room successfully Modified|
 
   @ReserveRoomNegative
   Scenario Outline: User not should be able to reserve a Conference Room with incorrect dates.
@@ -63,8 +62,6 @@ Feature: Rooms
     When I disabled the "<Room Name>" Conference Room
     Then the "<Message>" message should be displayed
       And the Conference Room should be disabled
-#    When I navigate to Tablet page
-#    Then the "<Room Name>" Conference Room should not be displayed.
       And the API should be displayed disabled to the Conference Room
 
   Examples:
