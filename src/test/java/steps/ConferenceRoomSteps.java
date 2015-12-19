@@ -16,6 +16,7 @@ import ui.BaseMainPageObject;
 import ui.BasePageConferenceRoom;
 import ui.PageTransporter;
 import ui.pages.*;
+import utility.Log;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -106,6 +107,7 @@ public class ConferenceRoomSteps {
         ArrayList<String> locationsNameArray = new ArrayList<String>();
         Collections.addAll(locationsNameArray, location.getName().split(","));
         locationsCreateByGiven = APIManager.getInstance().createLocationsByName(locationsNameArray);
+        System.out.println("***********LOcations: "+locationsCreateByGiven);
         PageTransporter.getInstance().refreshPage();
     }
 
@@ -206,32 +208,33 @@ public class ConferenceRoomSteps {
         Assert.assertFalse(conferenceRoomsPage.isResourceAssociate(quantity, conferenceRooms));
     }
 
+    @After("@AssignResource")
+    public void deleteResourcesByScenario(){
+        Log.info("***********************Entry AfterResource*********");
+        APIManager.getInstance().deleteResourcesById(resourcesCreatedByGiven);
+        PageTransporter.getInstance().refreshPage();
+    }
 
-//    @After("@AssignResource")
-//    public void deleteResourcesByScenario(){
-//        APIManager.getInstance().deleteResourcesById(resourcesCreatedByGiven);
-//        PageTransporter.getInstance().refreshPage();
-//    }
-//
-//    @After("@AssignLocation")
-//    public void deleteRLocationByScenario(){
-//        APIManager.getInstance().deleteLocationByID(locationsCreateByGiven);
-//        PageTransporter.getInstance().refreshPage();
-//    }
-//
-//    @After("@ReserveRoom")
-//    public void deleteOutOfOrder(){
-//        String serviceId = DBQuery.getInstance().getIdByKey("services","name","Microsoft Exchange Server 2010 SP3");
-//        String roomId = DBQuery.getInstance().getIdByKey("rooms","displayName",conferenceRooms.getName());
-//        String outOfOrderId = DBQuery.getInstance().getIdByKey("outoforders","roomId", conferenceRooms.getId());
-//        APIManager.getInstance().deleteOutOfOrder(serviceId,roomId,outOfOrderId);
-//        PageTransporter.getInstance().refreshPage();
-//    }
-//
-//    @After("@DisableRoom")
-//    public void activateRoom(){
-//        APIManager.getInstance().activateConferenceRooms(conferenceRooms.getId());
-//        PageTransporter.getInstance().refreshPage();
-//    }
+    @After("@AssignLocation")
+    public void deleteRLocationByScenario(){
+        APIManager.getInstance().deleteLocationByID(locationsCreateByGiven);
+        PageTransporter.getInstance().refreshPage();
+    }
+
+    @After("@ReserveRoom")
+    public void deleteOutOfOrder(){
+        String serviceId = DBQuery.getInstance().getIdByKey("services","name","Microsoft Exchange Server 2010 SP3");
+        String roomId = DBQuery.getInstance().getIdByKey("rooms","displayName",conferenceRooms.getName());
+        String outOfOrderId = DBQuery.getInstance().getIdByKey("outoforders","roomId", conferenceRooms.getId());
+        APIManager.getInstance().deleteOutOfOrder(serviceId,roomId,outOfOrderId);
+        PageTransporter.getInstance().refreshPage();
+    }
+
+    @After("@DisableRoom")
+    public void activateRoom(){
+        String roomId = DBQuery.getInstance().getIdByKey("rooms","displayName",conferenceRooms.getName());
+        APIManager.getInstance().activateConferenceRooms(roomId);
+        PageTransporter.getInstance().refreshPage();
+    }
 
 }
