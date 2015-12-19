@@ -38,8 +38,4 @@ public class Resource {
     public String getIcon(){ return icon;}
 
     public int getQuantity() {return quantity;}
-
-
-
-
 }
