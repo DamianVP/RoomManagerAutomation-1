@@ -33,6 +33,9 @@ public class BasePageLocations extends BasePageObject{
     @CacheLookup
     private WebElement buttonCancel;
 
+    /**
+     * Constructor
+     */
     public BasePageLocations() {
         PageFactory.initElements(driver, this);
         waitUntilPageObjectIsLoaded();
@@ -40,7 +43,6 @@ public class BasePageLocations extends BasePageObject{
 
     @Override
     public void waitUntilPageObjectIsLoaded() {
-//        wait.until(ExpectedConditions.visibilityOf(buttonSave));
     }
 
     protected LocationInfoPage clickRoomInfoTab(){

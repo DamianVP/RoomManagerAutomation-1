@@ -78,6 +78,9 @@ public class OutOfOrderPlanningPage extends BasePageConferenceRoom {
     @CacheLookup
     private WebElement toHoursOptions;
 
+    /**
+     * Constructor
+     */
     public OutOfOrderPlanningPage() {
         PageFactory.initElements(driver, this);
         waitUntilPageObjectIsLoaded();
@@ -88,22 +91,42 @@ public class OutOfOrderPlanningPage extends BasePageConferenceRoom {
         wait.until(ExpectedConditions.visibilityOf(inputDescription));
     }
 
+    /**
+     * @action clickElement
+     * @return
+     */
     private OutOfOrderPlanningPage clickElementCalendarButton(){
         buttonElementCalendar.click();
         return this;
     }
 
+    /**
+     *
+     * @param element
+     * @param value
+     * @return
+     */
     private OutOfOrderPlanningPage setInputWebElement(WebElement element, String value){
         Actions action = new Actions(driver);
         action.sendKeys(element,value).build().perform();
         return this;
     }
 
+    /**
+     *
+     * @param element
+     * @return
+     */
     private OutOfOrderPlanningPage clickWebElement(WebElement element){
         element.click();
         return this;
     }
 
+    /**
+     *
+     * @param reason
+     * @return
+     */
     private OutOfOrderPlanningPage selectTitle(String reason){
         dropDownTitle.click();
         WebElement specificTitle = menuDropDownTitle.findElement(By.xpath("//li[a[contains(text(),'" + reason + "')]]"));
@@ -111,7 +134,13 @@ public class OutOfOrderPlanningPage extends BasePageConferenceRoom {
         return this;
     }
 
-    //este metodo setea la hora. minutos tanto del from como del to
+    /**
+     * This method set the Hrs and minutes to created a Out of Order
+     * @param element
+     * @param hrs
+     * @param type
+     * @return
+     */
     private OutOfOrderPlanningPage setFromTimeRoom(WebElement element, String hrs, String type){
         WebElement increment = element.findElement(By.xpath("//table[@ng-model='form.from.value']//td/a[@ng-click='increment"+type+"()']"));
         WebElement decrement = element.findElement(By.xpath("//table[@ng-model='form.from.value']//td/a[@ng-click='decrement"+type+"()']"));
@@ -130,6 +159,13 @@ public class OutOfOrderPlanningPage extends BasePageConferenceRoom {
         return this;
     }
 
+    /**
+     * This method set the Time room to create a OutOfOrder
+     * @param element
+     * @param hrs
+     * @param type
+     * @return
+     */
     private OutOfOrderPlanningPage setToTimeRoom(WebElement element, String hrs, String type){
         WebElement incrementTo = toHoursOptions.findElement(By.xpath("//table[@ng-model='form.to.value']//tr/td/a[@ng-click='increment"+type+"()']"));
         WebElement decrementTo = toHoursOptions.findElement(By.xpath("//table[@ng-model='form.to.value']//tr/td/a[@ng-click='decrement"+type+"()']"));

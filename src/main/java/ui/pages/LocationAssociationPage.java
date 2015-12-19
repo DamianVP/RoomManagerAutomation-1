@@ -24,6 +24,9 @@ public class LocationAssociationPage extends BasePageLocations {
     @CacheLookup
     private WebElement listAssociatedRooms;
 
+    /**
+     * Constructor
+     */
     public LocationAssociationPage() {
         PageFactory.initElements(driver, this);
         waitUntilPageObjectIsLoaded();
@@ -38,6 +41,11 @@ public class LocationAssociationPage extends BasePageLocations {
         clickResourceAssociationsTab();
     }
 
+    /**
+     * This method verified that a location is associated with a specific room
+     * @param roomName
+     * @return
+     */
     public boolean isRoomPresentOnAssociatedList(String roomName){
         return listAssociatedRooms.findElement(By.xpath("//div[@class='row']/div[contains(text(),'" + roomName + "')]")).isDisplayed();
     }

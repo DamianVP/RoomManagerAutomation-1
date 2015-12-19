@@ -60,7 +60,6 @@ public class RoomInfoPage extends BasePageConferenceRoom{
 
     @Override
     public void waitUntilPageObjectIsLoaded() {
-//        wait.until(ExpectedConditions.visibilityOf(inputDisplayName));
     }
 
     private RoomInfoPage clickRoomEnabledButton(){
@@ -107,14 +106,27 @@ public class RoomInfoPage extends BasePageConferenceRoom{
         return this;
     }
 
+    /**
+     * This method go to Association Page
+     * @return
+     */
     public ResourceAssociationsPage gotoAssociationPage(){
         return clickResourceAssociationsTab();
     }
 
+    /**
+     * This method go to OutOfOrderPage
+     * @return
+     */
     public OutOfOrderPlanningPage gotoOutOfOrderPlanningPage(){
         return clickOutOfOrderPlanningTab();
     }
 
+    /**
+     * This Method associated a room to location
+     * @param location
+     * @return ConferenceRoomsPage
+     */
     public ConferenceRoomsPage setAssociateLocation(Location location){
         clickLocationButton();
         clickCollapseLocationButton();

@@ -37,6 +37,9 @@ public abstract class BasePageConferenceRoom extends BasePageObject{
     @CacheLookup
     private WebElement buttonCancel;
 
+    /**
+     * Constructor
+     */
     public BasePageConferenceRoom() {
         PageFactory.initElements(driver, this);
         waitUntilPageObjectIsLoaded();

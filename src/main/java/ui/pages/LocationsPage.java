@@ -26,6 +26,9 @@ public class LocationsPage extends BaseMainPageObject {
     @CacheLookup
     private WebElement tableLocation;
 
+    /**
+     * Constructor
+     */
     public LocationsPage() {
         PageFactory.initElements(driver, this);
         waitUntilPageObjectIsLoaded();
@@ -33,9 +36,13 @@ public class LocationsPage extends BaseMainPageObject {
 
     @Override
     public void waitUntilPageObjectIsLoaded() {
-//        wait.until(ExpectedConditions.visibilityOf(tableLocation));
     }
 
+    /**
+     * This method does double click on a specific location
+     * @param locationsName
+     * @return
+     */
     private LocationInfoPage doubleClickOnSpecificLocation(String locationsName){
         Actions action = new Actions(driver);
         WebElement specificLocation = tableLocation.findElement(By.xpath("//div[@ng-dblclick='editLocation(row.entity)' and contains(text(),'" + locationsName + "')]"));
@@ -44,6 +51,12 @@ public class LocationsPage extends BaseMainPageObject {
         return new LocationInfoPage();
     }
 
+    /**
+     * This method verified that specific room is associated to specific location
+     * @param room
+     * @param location
+     * @return
+     */
     public boolean isLocationAssociatedToRoom(ConferenceRooms room, Location location){
         locationInfoPage = doubleClickOnSpecificLocation(location.getDisplayName());
         locationAssociationPage=locationInfoPage.goToLocationAssociationPage();

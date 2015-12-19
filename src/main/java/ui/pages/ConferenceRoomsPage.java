@@ -36,6 +36,9 @@ public class ConferenceRoomsPage extends BaseMainPageObject {
     @FindBy(xpath = "//div[contains(@class,'ng-scope ngRow')]")
     private WebElement rowConferenceRoom;
 
+    /**
+     * Constructor
+     */
     public ConferenceRoomsPage() {
         PageFactory.initElements(driver, this);
         waitUntilPageObjectIsLoaded();
@@ -52,7 +55,8 @@ public class ConferenceRoomsPage extends BaseMainPageObject {
     }
 
     private WebElement searchRoom(String roomDisplayName){
-        return roomsTable.findElement(By.xpath("//div[span[contains(text(),'" + roomDisplayName + "')]]"));
+        return roomsTable.findElement(By.xpath("//div[span[contains(text(),'" +
+                                                roomDisplayName + "')]]"));
     }
 
     private WebElement searchResource(String resourceDisplayName){
@@ -65,6 +69,11 @@ public class ConferenceRoomsPage extends BaseMainPageObject {
         return new RoomInfoPage();
     }
 
+    /**
+     *
+     * @param room
+     * @return RoomInfoPage
+     */
     public RoomInfoPage doubleClickOnSpecificRoom(ConferenceRooms room){
         Actions action = new Actions(driver);
         WebElement buttonRoom = searchRoom(room.getDisplayName());
@@ -73,12 +82,22 @@ public class ConferenceRoomsPage extends BaseMainPageObject {
         return new RoomInfoPage();
     }
 
+    /**
+     * @param resource
+     * @return ConferenceRoomsPage
+     */
+
     public ConferenceRoomsPage clickOnSpecificResource(Resource resource){
         WebElement buttonResource=searchResource(resource.getDisplayName());
         buttonResource.click();
         return this;
     }
 
+    /**
+     * This method is verified that the message is displayed
+     * @param message
+     * @return
+     */
     public boolean isMessagePresent(String message){
         try {
             return driver.findElement(By.xpath("//div[@class='ng-binding ng-scope' and contains(text(),'" + message + "')]")).isDisplayed();
@@ -87,6 +106,12 @@ public class ConferenceRoomsPage extends BaseMainPageObject {
         }
     }
 
+    /**
+     * This method is verified that a resource is associated with a specific room
+     * @param quantity
+     * @param room
+     * @return
+     */
     public boolean isResourceAssociate(String quantity, ConferenceRooms room){
         try {
             return roomsTable.findElement(By.xpath("//div[div/div[span[contains(text(),'" + room.getDisplayName() + "')]]]/following-sibling::div//span[contains(text(),' x "+quantity+" ')]")).isDisplayed();
@@ -95,12 +120,22 @@ public class ConferenceRoomsPage extends BaseMainPageObject {
         }
     }
 
+    /**
+     * This method disables or enables a specific room
+     * @param room
+     * @return
+     */
     public ConferenceRoomsPage clickOnDisabledConferenceRoom(ConferenceRooms room){
         WebElement disabledButton = roomsTable.findElement(By.xpath("//div[div/div[span[contains(text(),'" + room.getDisplayName() + "')]]]/preceding-sibling::div/preceding-sibling::div//span"));
         disabledButton.click();
         return this;
     }
 
+    /**
+     * This method verified that a room is disabled
+     * @param room
+     * @return
+     */
     public boolean isConferenceRoomsDisabled(ConferenceRooms room){
         try {
             WebElement conferenceRoom = roomsTable.findElement(By.xpath("//div[div/div[span[contains(text(),'" + room.getDisplayName() + "')]]]/preceding-sibling::div/preceding-sibling::div//div[@ng-if='(row.entity.enabled == false)']"));
@@ -110,6 +145,11 @@ public class ConferenceRoomsPage extends BaseMainPageObject {
         }
     }
 
+    /**
+     * THis method verified that a calendar icon is present on specific room
+     * @param room
+     * @return
+     */
     public boolean isCalendarPresent(ConferenceRooms room){
         try {
             WebElement calendar = roomsTable.findElement(By.xpath("//div[div/div[span[contains(text(),'" + room.getDisplayName() + "')]]]/preceding-sibling::div"));
@@ -119,6 +159,9 @@ public class ConferenceRoomsPage extends BaseMainPageObject {
         }
     }
 
+    /**
+     * This method verified that any resource columns is displayed on the window
+     */
     public void ensureIsNotDisplayedResourceColumns(){
         List<WebElement> resourcesList = resourcesPanel.findElements(By.xpath("//div[@ng-repeat='resource in resources']"));
         for (WebElement option : resourcesList) {

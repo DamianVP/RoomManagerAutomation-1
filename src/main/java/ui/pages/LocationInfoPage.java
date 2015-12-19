@@ -11,6 +11,9 @@ import ui.BasePageLocations;
  * To change this template use File | Settings | File Templates.
  */
 public class LocationInfoPage extends BasePageLocations {
+    /**
+     * Constructor
+     */
     public LocationInfoPage() {
         PageFactory.initElements(driver, this);
         waitUntilPageObjectIsLoaded();
@@ -18,9 +21,12 @@ public class LocationInfoPage extends BasePageLocations {
 
     @Override
     public void waitUntilPageObjectIsLoaded() {
-//        wait.until(ExpectedConditions.visibilityOf());
     }
 
+    /**
+     * This method go to AssociationPage
+     * @return
+     */
     public LocationAssociationPage goToLocationAssociationPage(){
         return clickResourceAssociationsTab();
     }
