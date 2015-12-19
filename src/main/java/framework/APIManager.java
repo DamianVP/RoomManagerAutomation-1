@@ -6,6 +6,7 @@ import com.jayway.restassured.response.Response;
 import common.EnumKeys;
 import entities.*;
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -62,17 +63,22 @@ public class APIManager {
         String json = response.asString();
         JsonPath jp = new JsonPath(json);
         resource = setResource((String)jp.get("_id"), (String)jp.get("name"), (String)jp.get("description"), (String)jp.get("customName"), (String)jp.get("fontIcon"));
-
         return resource;
     }
 
-    private void createLocationByName(String name) {
+    private Location createLocationByName(String name) {
+        Location location = new Location();
+        Response response =
         given()
                 .header("Authorization", "jwt " + token)
                 .parameters("customName", name, "name", name,
                             "description", "")
                 .post("/locations")
                 ;
+        String json = response.asString();
+        JsonPath jp = new JsonPath(json);
+        location = setLocation((String)jp.get("_id"), (String)jp.get("name"), (String)jp.get("description"), (String)jp.get("customName"), (String)jp.get("path"));
+        return location;
     }
 
     private void deleteResourceByID(String id) {
@@ -140,7 +146,7 @@ public class APIManager {
     public ArrayList<Location> createLocationsByName(ArrayList<String> locationsName) {
         ArrayList<Location> locations = new ArrayList<>();
         for (String name : locationsName) {
-            createLocationByName(name);
+            locations.add(createLocationByName(name));
         }
         return locations;
     }
@@ -166,10 +172,14 @@ public class APIManager {
     }
 
     public void activateConferenceRooms(String roomId){
+        boolean flag = true;
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("enabled", flag);
         given()
-                .header("Authorization", "jwt "+ token)
-                .parameters("enabled", true)
-                .put("/rooms/"+roomId)
+                .contentType("application/json")
+                .header("Authorization", "jwt " + token)
+                .content(jsonObject.toString())
+                .put("/rooms/" + roomId)
                 ;
     }
 
@@ -177,7 +187,6 @@ public class APIManager {
         Response response = given().when().get("/resources/"+id);
         String json = response.asString();
         JsonPath jp = new JsonPath(json);
-
         return setResource((String)jp.get(EnumKeys.RESOURCE_KEY._id), (String)jp.get(EnumKeys.RESOURCE_KEY.name),
                             (String)jp.get(EnumKeys.RESOURCE_KEY.description), (String)jp.get(EnumKeys.RESOURCE_KEY.customName),
                             (String)jp.get("fontIcon"));
