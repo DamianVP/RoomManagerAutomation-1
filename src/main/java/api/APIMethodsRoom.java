@@ -17,11 +17,11 @@ import static com.jayway.restassured.RestAssured.given;
 public class APIMethodsRoom {
     private static APIManager apiManager = APIManager.getInstance();
 
-    public static void activateConferenceRooms(String roomId){
+    public static void activateConferenceRooms(ConferenceRoom room){
         given()
                 .header("Authorization", "jwt "+ apiManager.getToken())
                 .parameters("enabled", true)
-                .put("/rooms/"+roomId);
+                .put("/rooms/"+room.getId());
     }
 
     //REVISAR
@@ -36,6 +36,7 @@ public class APIMethodsRoom {
                 conferenceRoom1.setDisplayName(jsonArray.getJSONObject(indice).getString(Enum.ROOM_KEY.customName));
                 conferenceRoom1.setId(jsonArray.getJSONObject(indice).getString(Enum.ROOM_KEY.id));
                 conferenceRoom1.setEnabled(jsonArray.getJSONObject(indice).getBoolean(Enum.ROOM_KEY.enable));
+                conferenceRoom1.setLocation(jsonArray.getJSONObject(indice).getString(Enum.ROOM_KEY.locationId));
             }
         }
         return conferenceRoom1;

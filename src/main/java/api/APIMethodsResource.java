@@ -2,8 +2,8 @@ package api;
 
 import com.jayway.restassured.path.json.JsonPath;
 import com.jayway.restassured.response.Response;
-import common.*;
 import common.Enum;
+import common.EnumKeys;
 import entities.ConferenceRoom;
 import entities.Resource;
 import org.json.JSONArray;
@@ -86,14 +86,13 @@ public class APIMethodsResource {
         return resources;
     }
 
-    public static Resource getResourceInConferenceRoomById(ConferenceRoom conferenceRoom, Resource resource){
-        Resource res = new Resource();
+    public static int getIsResourceInConferenceRoomById(ConferenceRoom conferenceRoom, Resource resource){
+        int res=0;
         Response response = given().when().get("/rooms/" + conferenceRoom.getId() + "/resources");
         JSONArray jsonArray = new JSONArray(response.asString());
         for (int indice = 0; indice < jsonArray.length(); indice++) {
             if (jsonArray.getJSONObject(indice).getString("resourceId").equalsIgnoreCase(resource.getID())) {
-                res.setID(jsonArray.getJSONObject(indice).getString("resourceId"));
-                res.setQuantity(jsonArray.getJSONObject(indice).getInt("quantity"));
+                res=jsonArray.getJSONObject(indice).getInt("quantity");
             }
         }
         return res;

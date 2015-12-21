@@ -3,9 +3,8 @@ package api;
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.path.json.JsonPath;
 import com.jayway.restassured.response.Response;
-import common.Enum;
-import framework.CredentialsManager;
 import database.DBQuery;
+import framework.CredentialsManager;
 import org.json.JSONArray;
 
 import java.nio.charset.StandardCharsets;

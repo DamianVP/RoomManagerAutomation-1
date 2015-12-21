@@ -3,6 +3,7 @@ package api;
 import com.jayway.restassured.path.json.JsonPath;
 import com.jayway.restassured.response.Response;
 import common.Enum;
+import entities.ConferenceRoom;
 import entities.Location;
 
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ public class APIMethodsLocation {
         given()
                 .header("Authorization", "jwt " + apiManager.getToken())
                 .parameters(Enum.LOCATION_KEY.id, location.getId())
-                .delete("/locations/"+location.getId());
+                .delete("/locations/" + location.getId());
     }
 
     public static void deleteLocations(ArrayList<Location> locations) {
