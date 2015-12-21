@@ -1,6 +1,6 @@
 package ui.pages;
 
-import entities.ConferenceRooms;
+import entities.ConferenceRoom;
 import entities.Resource;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -63,7 +63,7 @@ public class ConferenceRoomsPage extends BaseMainPageObject {
         return resourcesPanel.findElement(By.xpath("//div[@ng-repeat='resource in resources']/span[span[contains(text(),'" + resourceDisplayName + "')]]"));
     }
 
-    public RoomInfoPage clickOnSpecificRoom(ConferenceRooms room){
+    public RoomInfoPage clickOnSpecificRoom(ConferenceRoom room){
         WebElement buttonRoom=searchRoom(room.getDisplayName());
         buttonRoom.click();
         return new RoomInfoPage();
@@ -74,7 +74,7 @@ public class ConferenceRoomsPage extends BaseMainPageObject {
      * @param room
      * @return RoomInfoPage
      */
-    public RoomInfoPage doubleClickOnSpecificRoom(ConferenceRooms room){
+    public RoomInfoPage doubleClickOnSpecificRoom(ConferenceRoom room){
         Actions action = new Actions(driver);
         WebElement buttonRoom = searchRoom(room.getDisplayName());
         action.moveToElement(buttonRoom).perform();
@@ -112,7 +112,7 @@ public class ConferenceRoomsPage extends BaseMainPageObject {
      * @param room
      * @return
      */
-    public boolean isResourceAssociate(String quantity, ConferenceRooms room){
+    public boolean isResourceAssociate(String quantity, ConferenceRoom room){
         try {
             return roomsTable.findElement(By.xpath("//div[div/div[span[contains(text(),'" + room.getDisplayName() + "')]]]/following-sibling::div//span[contains(text(),' x "+quantity+" ')]")).isDisplayed();
         }   catch (Exception e){
@@ -125,7 +125,7 @@ public class ConferenceRoomsPage extends BaseMainPageObject {
      * @param room
      * @return
      */
-    public ConferenceRoomsPage clickOnDisabledConferenceRoom(ConferenceRooms room){
+    public ConferenceRoomsPage clickOnDisabledConferenceRoom(ConferenceRoom room){
         WebElement disabledButton = roomsTable.findElement(By.xpath("//div[div/div[span[contains(text(),'" + room.getDisplayName() + "')]]]/preceding-sibling::div/preceding-sibling::div//span"));
         disabledButton.click();
         return this;
@@ -136,7 +136,7 @@ public class ConferenceRoomsPage extends BaseMainPageObject {
      * @param room
      * @return
      */
-    public boolean isConferenceRoomsDisabled(ConferenceRooms room){
+    public boolean isConferenceRoomsDisabled(ConferenceRoom room){
         try {
             WebElement conferenceRoom = roomsTable.findElement(By.xpath("//div[div/div[span[contains(text(),'" + room.getDisplayName() + "')]]]/preceding-sibling::div/preceding-sibling::div//div[@ng-if='(row.entity.enabled == false)']"));
             return conferenceRoom.isDisplayed();
@@ -150,7 +150,7 @@ public class ConferenceRoomsPage extends BaseMainPageObject {
      * @param room
      * @return
      */
-    public boolean isCalendarPresent(ConferenceRooms room){
+    public boolean isCalendarPresent(ConferenceRoom room){
         try {
             WebElement calendar = roomsTable.findElement(By.xpath("//div[div/div[span[contains(text(),'" + room.getDisplayName() + "')]]]/preceding-sibling::div"));
             return calendar.isDisplayed();
