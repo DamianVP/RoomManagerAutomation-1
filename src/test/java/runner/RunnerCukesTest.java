@@ -2,17 +2,12 @@ package runner;
 
 import common.CommonMethod;
 import cucumber.api.CucumberOptions;
-import cucumber.api.java.en.Given;
 import cucumber.api.testng.AbstractTestNGCucumberTests;
 import framework.BrowserManager;
 import org.apache.log4j.Logger;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import steps.hooks.FeatureHooks;
-import org.testng.annotations.AfterMethod;
-import ui.PageTransporter;
-
-import java.sql.SQLException;
 
 /**
  * Created with IntelliJ IDEA.
